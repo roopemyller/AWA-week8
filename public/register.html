@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Register to Coddit</title>
 </head>
 <body>
-    <h2>Register page</h2>
+    <h2>Register to Coddit!</h2>
     <form id="registerForm">
+
+        <label for="email">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
 
         <label for="email">Email:</label><br>
         <input type="text" id="email" name="email"><br>
 
         <label for="password">Password:</label><br>
         <input type="text" id="password" name="password"><br>
+
+        <label for="isAdmin">Admin:</label>
+        <input type="checkbox" id="isAdmin" name="isAdmin"><br>
+
+        <br>
 
         <button type="submit">Register</button>
     </form>

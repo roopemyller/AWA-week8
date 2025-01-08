@@ -8,6 +8,8 @@ const router: Router = Router()
 router.post('/api/user/register/', async (req, res) => {
     const {email, password, username, isAdmin} = req.body
 
+    console.log(req.body)
+
     if (!email || !password){
         res.status(400).json({message: 'No email or password'})
         return
@@ -26,7 +28,7 @@ router.post('/api/user/register/', async (req, res) => {
             email,
             password: hashedPassword,
             username,
-            isAdmin: isAdmin || false,
+            isAdmin: isAdmin !== undefined ? isAdmin : false
         })
 
         await newUser.save()

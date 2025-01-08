@@ -1,4 +1,5 @@
 async function postData(url, data) {
+    console.log(data)
     const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -8,10 +9,11 @@ async function postData(url, data) {
 }
 
 async function register() {
-    const email = document.getElementById('email').value
-    const password = document.getElementById('password').value
-
-    const response = await postData('/api/user/register', {email, password})
+    const formData = new FormData(registerForm)
+    const data = Object.fromEntries(formData.entries())
+    data.isAdmin = formData.has('isAdmin')
+    
+    const response = await postData('/api/user/register', data)
 
     if (response.ok) {
         alert('Registration successfull!')
@@ -22,47 +24,18 @@ async function register() {
 }
 
 async function login() {
-    const email = document.getElementById('email').value
-    const password = document.getElementById('password').value
+    const formData = new FormData(loginForm)
+    const data = Object.fromEntries(formData.entries())
 
-    const response = await postData('/api/user/login', {email, password})
+    const response = await postData('/api/user/login', data)
 
     if (response.ok) {
-        const data = await response.json()
+        const result = await response.json()
         alert('Login successfull!')
-        localStorage.setItem('token', data.token)
+        localStorage.setItem('token', result.token)
         window.location.href = '/'
     } else {
         alert('Login failed!');
-    }
-}
-
-async function validateToken() {
-    const token = localStorage.getItem('token');
-        
-    if (token) {
-        try {
-            const response = await fetch('/api/private', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-
-            if (response.ok) {
-                const data = await response.json()
-                console.log(data.message)
-            } else {
-                alert('Session expired or invalid token!')
-                window.location.href = '/login.html'
-            }
-        } catch (error) {
-            console.error('Error validating token:', error)
-            alert('Error validating token!')
-            window.location.href = '/login.html'
-        }
-    } else {
-        window.location.href = '/login.html'
     }
 }
 
@@ -80,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const registerForm = document.getElementById('registerForm')
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault()
+            console.log("Register pushed!")
             register()
         })
     }else if(path.includes('login.html')){
@@ -91,14 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }else if (path === '/'){
         console.log("index.html")
         
-        validateToken()
-
         const token = localStorage.getItem('token')
         if(token){
-            const logoutButton = document.getElementById('logout')
-            if(logoutButton){
-                logoutButton.addEventListener('click', logout)
-            }
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const adminStatus = document.getElementById('adminStatus')
+            console.log(payload)
+            adminStatus.textContent = `Logged in as ${payload.username}. Admin: ${payload.isadmin}`;
         }else {
             window.location.href = '/login.html'
         }
