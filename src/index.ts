@@ -2,13 +2,23 @@ import {Request, Response, Router} from "express"
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken"
 import {User} from './models/User'
+import inputValidation from './validators/inputValidation'
+import { validationResult } from 'express-validator';
+
 
 const router: Router = Router()
 
-router.post('/api/user/register/', async (req, res) => {
+router.post('/api/user/register/', inputValidation.register, async (req: Request, res: Response) => {
     const {email, password, username, isAdmin} = req.body
 
     console.log(req.body)
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors)
+        res.status(400).json({ errors: errors.array() });
+        return
+    }
 
     if (!email || !password){
         res.status(400).json({message: 'No email or password'})
@@ -20,7 +30,6 @@ router.post('/api/user/register/', async (req, res) => {
         res.status(403).json({message: 'Email is already registered'})
         return
     }
-
     try {
         const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -40,8 +49,14 @@ router.post('/api/user/register/', async (req, res) => {
     }
 })
 
-router.post('/api/user/login', async (req, res) => {
+router.post('/api/user/login', inputValidation.login, async (req: Request, res: Response) => {
     const {email, password} = req.body
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.status(400).json({ errors: errors.array() });
+        return
+    }
 
     if (!email || !password){
         res.status(400).json({message: 'No email or password'})
