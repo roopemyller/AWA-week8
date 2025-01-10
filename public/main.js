@@ -71,6 +71,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const adminStatus = document.getElementById('adminStatus')
             console.log(payload)
             adminStatus.textContent = `Logged in as ${payload.username}. Admin: ${payload.isadmin}`;
+
+            document.getElementById("logoutButton").addEventListener('click', async () => {
+                try {
+                    const response = await fetch('/api/user/logout', {
+                        method: 'POST',
+                        credentials: 'include'
+                    })
+                    if (response.ok){
+                        window.location.href = '/register.html'
+                    }else{
+                        alert('Failed to log out')
+                    }
+                } catch (error) {
+                    console.error('Logout error:', error)
+                    alert('An error occured during logout')
+                }
+            })
+
         }else {
             window.location.href = '/login.html'
         }

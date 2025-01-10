@@ -74,4 +74,9 @@ router.post('/api/user/login', inputValidation_1.default.login, async (req, res)
         console.log(error);
     }
 });
+router.post('/api/user/logout', (req, res) => {
+    res.clearCookie('token');
+    res.status(200).json({ message: "Logged out successfully" });
+    return;
+});
 exports.default = router;

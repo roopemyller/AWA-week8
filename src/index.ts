@@ -84,4 +84,10 @@ router.post('/api/user/login', inputValidation.login, async (req: Request, res: 
     }
 })
 
+router.post('/api/user/logout', (req: Request, res: Response) => {
+    res.clearCookie('token')
+    res.status(200).json({message: "Logged out successfully"})
+    return
+})
+
 export default router
