@@ -33,7 +33,8 @@ const authenticateAdmin = (req, res, next) => {
             return;
         }
         req.user = decoded;
-        if (!req.user.isAdmin) {
+        console.log(req.user);
+        if (!req.user.isadmin) {
             res.status(403).json({ message: 'Access denied.' });
             return;
         }
