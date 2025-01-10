@@ -99,7 +99,7 @@ router.post('/api/topic', validateToken_1.authenticateUser, async (req, res) => 
             username: req.user.username,
         });
         await newTopic.save();
-        res.status(201).json(newTopic);
+        res.status(200).json(newTopic);
     }
     catch (error) {
         res.status(500).json({ message: 'Error creating topic.', error });

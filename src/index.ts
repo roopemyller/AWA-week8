@@ -111,7 +111,7 @@ router.post('/api/topic', authenticateUser, async (req: Request, res: Response) 
             username: req.user.username,
         })
         await newTopic.save()
-        res.status(201).json(newTopic)
+        res.status(200).json(newTopic)
     } catch (error) {
         res.status(500).json({ message: 'Error creating topic.', error })
     }
