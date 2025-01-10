@@ -1,10 +1,13 @@
 import {Request, Response, Router} from "express"
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken"
-import {User} from './models/User'
-import inputValidation from './validators/inputValidation'
-import { validationResult } from 'express-validator';
 
+import {User} from './models/User'
+import {Topic} from './models/Topic'
+
+import inputValidation from './validators/inputValidation'
+import { validationResult } from 'express-validator'
+import { authenticateUser, authenticateAdmin } from './middleware/validateToken'
 
 const router: Router = Router()
 
@@ -88,6 +91,46 @@ router.post('/api/user/logout', (req: Request, res: Response) => {
     res.clearCookie('token')
     res.status(200).json({message: "Logged out successfully"})
     return
+})
+
+router.get('/api/topics', async (req: Request, res: Response) => {
+    try {
+        const topics = await Topic.find()
+        res.status(200).json(topics)
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching topics.', error })
+    }
+})
+
+router.post('/api/topic', authenticateUser, async (req: Request, res: Response) => {
+    try {
+        const { title, content, username } = req.body
+        const newTopic = new Topic({
+            title,
+            content,
+            username: req.user.username,
+        })
+        await newTopic.save()
+        res.status(201).json(newTopic)
+    } catch (error) {
+        res.status(500).json({ message: 'Error creating topic.', error })
+    }
+})
+
+router.delete('/api/topic/:id', authenticateAdmin, async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params
+        const deletedTopic = await Topic.findByIdAndDelete(id)
+
+        if (!deletedTopic) {
+            res.status(404).json({ message: 'Topic not found.' })
+            return
+        }
+
+        res.status(200).json({ message: 'Topic deleted successfully.' })
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting topic.', error })
+    }
 })
 
 export default router
