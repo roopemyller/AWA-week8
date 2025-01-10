@@ -19,6 +19,19 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
     })
 }
 const authenticateAdmin = (req: Request, res: Response, next: NextFunction) => {
+    
+    console.log("Authenticating Admin")
+
+    if (req.user && req.user.role === 'admin') {
+        console.log('Admin authenticated')
+        next()
+    } else {
+        console.log('Admin authentication failed')
+        res.status(403).json({ message: 'Forbidden: Admins only.' })
+    }
+    
+    /*
+    
     const token = req.headers['authorization']?.split(' ')[1]
 
     if (!token) {
@@ -40,6 +53,7 @@ const authenticateAdmin = (req: Request, res: Response, next: NextFunction) => {
 
         next()
     })
+    */
 }
 
 export { authenticateUser, authenticateAdmin }
