@@ -119,6 +119,7 @@ router.post('/api/topic', authenticateUser, async (req: Request, res: Response) 
 
 router.delete('/api/topic/:id', authenticateAdmin, async (req: Request, res: Response) => {
     try {
+        console.log("Server deleting topic")
         const { id } = req.params
         const deletedTopic = await Topic.findByIdAndDelete(id)
 

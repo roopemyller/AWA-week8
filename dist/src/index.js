@@ -107,6 +107,7 @@ router.post('/api/topic', validateToken_1.authenticateUser, async (req, res) => 
 });
 router.delete('/api/topic/:id', validateToken_1.authenticateAdmin, async (req, res) => {
     try {
+        console.log("Server deleting topic");
         const { id } = req.params;
         const deletedTopic = await Topic_1.Topic.findByIdAndDelete(id);
         if (!deletedTopic) {

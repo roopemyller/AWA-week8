@@ -5,10 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="main.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <style>
+        .nav-wrapper form {
+            display: flex;
+            align-items: center;
+        }
+        .nav-wrapper .input-field {
+            margin: 0 10px;
+        }
+        .nav-wrapper .btn {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Coddit</h2>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">CODDIT</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <form id="loginForm">
+                        <div class="input-field">
+                            <input id="email" type="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-field">
+                            <input id="password" type="password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn">Login</button>
+                    </form>
+                </li>
+                <li><a href="/register.html">Register</a></li>
+                <li><button id="logoutButton" class="btn" style="display: none;">Logout</button></li>
+            </ul>
+        </div>
+    </nav>
+
     <p id="adminStatus"></p>
-    <button id="logoutButton">Logout</button>
+    <div class="container">
+        <div id="topicForm" style="display: block;">
+            <input type="text" id="topicTitle" placeholder="Topic Title">
+            <textarea id="topicText" placeholder="Topic Content"></textarea>
+            <button id="postTopic" type="submit">Post Topic</button>
+        </div>
+        <div id="topics"></div>
+    </div>
+
 </body>
 </html>
