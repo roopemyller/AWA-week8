@@ -18,7 +18,7 @@ async function register() {
 
     if (response.ok) {
         alert('Registration successfull!')
-        window.location.href = '/index.html';
+        window.location.href = '/';
     } else {
         alert('Registration failed!');
     }
@@ -36,7 +36,7 @@ async function login() {
         const result = await response.json()
         alert('Login successfull!')
         localStorage.setItem('token', result.token)
-        window.location.href = '/index.html'
+        window.location.href = '/'
     } else {
         alert('Login failed!');
     }
@@ -45,7 +45,7 @@ async function login() {
 async function logout() {
     localStorage.removeItem('token')
     
-    window.location.href = '/index.html'
+    window.location.href = '/'
 }
 
 async function fetchTopics() {
@@ -137,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const token = localStorage.getItem('token')
 
         if(token) {
-        
             const payload = JSON.parse(atob(token.split('.')[1]));
             const adminStatus = document.getElementById('adminStatus')
             adminStatus.textContent = `Logged in as ${payload.username}. Admin: ${payload.isadmin}`;
@@ -146,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             registerLink.style.display = 'none'
             logoutButton.style.display = 'block'
 
-            // document.getElementById('topicForm').style.display = 'block'
+            document.getElementById('topicForm').style.display = 'block'
             fetchTopics()
 
             const postTopicButton = document.getElementById('postTopic')
@@ -164,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                     if (response.ok){
                         localStorage.removeItem('token')
-                        window.location.href = '/index.html'
+                        window.location.href = '/'
                     }else{
                         alert('Failed to log out')
                     }
@@ -178,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loginForm.style.display = 'flex'
             registerLink.style.display = 'block'
             logoutButton.style.display = 'none'
+            document.getElementById('topicForm').style.display = 'none';
 
             fetchTopics()
 
