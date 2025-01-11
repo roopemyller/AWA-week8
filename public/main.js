@@ -145,10 +145,28 @@ document.addEventListener('DOMContentLoaded', () => {
             registerLink.style.display = 'none'
             logoutButton.style.display = 'block'
 
+            const topicTitleInput = document.createElement('input')
+            topicTitleInput.setAttribute('type', 'text')
+            topicTitleInput.setAttribute('id', 'topicTitle')
+            topicTitleInput.setAttribute('placeholder', 'Topic Title')
+
+            const topicTextArea = document.createElement('textarea')
+            topicTextArea.setAttribute('id', 'topicText')
+            topicTextArea.setAttribute('placeholder', 'Topic Content')
+            topicTextArea.setAttribute('class', 'materialize-textarea')
+
+            const postTopicButton = document.createElement('button')
+            postTopicButton.setAttribute('id', 'postTopic')
+            postTopicButton.setAttribute('type', 'submit')
+            postTopicButton.textContent = 'Post Topic'
+
+            topicForm.appendChild(topicTitleInput)
+            topicForm.appendChild(topicTextArea)
+            topicForm.appendChild(postTopicButton)
+
             document.getElementById('topicForm').style.display = 'block'
             fetchTopics()
 
-            const postTopicButton = document.getElementById('postTopic')
             postTopicButton.addEventListener('click', (e) => {
                 e.preventDefault()
                 postTopic()
@@ -177,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loginForm.style.display = 'flex'
             registerLink.style.display = 'block'
             logoutButton.style.display = 'none'
-            document.getElementById('topicForm').style.display = 'none';
+            document.getElementById('topicForm').innerHTML = ''
 
             fetchTopics()
 
