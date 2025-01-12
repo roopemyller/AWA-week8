@@ -17,6 +17,10 @@
         .nav-wrapper .btn {
             margin-left: 10px;
         }
+        .nav-wrapper .col {
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -25,18 +29,22 @@
             <a href="#" class="brand-logo">CODDIT</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
-                    <form id="loginForm">
+                    <form id="loginForm" class="row">
                         <div class="input-field">
-                            <input id="email" type="email" placeholder="Email" required>
+                            <input id="email" type="email" placeholder="Email" class="navbar-input" required>
                         </div>
                         <div class="input-field">
-                            <input id="password" type="password" placeholder="Password" required>
+                            <input id="password" type="password" placeholder="Password" class="navbar-input" required>
                         </div>
                         <button type="submit" class="btn">Login</button>
                     </form>
                 </li>
-                <li><a href="/register.html">Register</a></li>
-                <li><button id="logoutButton" class="btn" style="display: none;">Logout</button></li>
+                <div class="col">
+                    <a href="/register.html"><button class="btn waves-effect waves-light">Register</button></a>
+                </div>
+                <div class="col">
+                    <button id="logoutButton" class="btn waves-effect waves-light" style="display: none;">Logout</button>
+                </div>
             </ul>
         </div>
     </nav>

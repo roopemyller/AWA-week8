@@ -56,14 +56,32 @@ async function fetchTopics() {
 
     topics.forEach(topic => {
         const topicDiv = document.createElement('div')
+        topicDiv.classList.add('card', 'z-depth-2', 'hoverable', 'grey', 'lighten-2')
+
+        const contentDiv = document.createElement('div')
+        contentDiv.classList.add('card-content')
+
         const titleSpan = document.createElement('span')
+        titleSpan.classList.add('card-title')
+
         const contentP = document.createElement('p')
         const userP = document.createElement('p')
+        userP.classList.add('grey-text', 'text-darken-2')
+
+        const actionDiv = document.createElement('div')
+        actionDiv.classList.add('card-action')
+
         const deleteButton = document.createElement('button')
+        deleteButton.classList.add('btn', 'waves-effect', 'waves-light')
 
         titleSpan.textContent = topic.title
         contentP.textContent = topic.content    
         userP.textContent = `Posted by ${topic.username} on ${new Date(topic.createdAt).toLocaleString()}`
+
+        contentDiv.appendChild(titleSpan)
+        contentDiv.appendChild(contentP)
+        contentDiv.appendChild(userP)
+        actionDiv.appendChild(deleteButton)
 
         deleteButton.textContent = 'Delete'
         deleteButton.id = 'deleteTopic'
@@ -85,7 +103,10 @@ async function fetchTopics() {
                 alert('Failed to delete topic!')
             }
         })
-        topicDiv.append(titleSpan, contentP, userP, deleteButton)
+
+        
+        topicDiv.appendChild(contentDiv)
+        topicDiv.appendChild(actionDiv)
         topicsDiv.appendChild(topicDiv)
     })
 }
@@ -154,11 +175,13 @@ document.addEventListener('DOMContentLoaded', () => {
             topicTextArea.setAttribute('id', 'topicText')
             topicTextArea.setAttribute('placeholder', 'Topic Content')
             topicTextArea.setAttribute('class', 'materialize-textarea')
+            topicTextArea.classList.add('materialize-textarea')
 
             const postTopicButton = document.createElement('button')
             postTopicButton.setAttribute('id', 'postTopic')
             postTopicButton.setAttribute('type', 'submit')
             postTopicButton.textContent = 'Post Topic'
+            postTopicButton.classList.add('btn', "waves-effect", "waves-light")
 
             topicForm.appendChild(topicTitleInput)
             topicForm.appendChild(topicTextArea)

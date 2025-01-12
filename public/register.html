@@ -4,27 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register to Coddit</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
 </head>
 <body>
-    <h2>Register to Coddit!</h2>
-    <form id="registerForm">
-
-        <label for="email">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-
-        <label for="email">Email:</label><br>
-        <input type="text" id="email" name="email"><br>
-
-        <label for="password">Password:</label><br>
-        <input type="text" id="password" name="password"><br>
-
-        <label for="isAdmin">Admin:</label>
-        <input type="checkbox" id="isAdmin" name="isAdmin"><br>
-
-        <br>
-
-        <button type="submit">Register</button>
-    </form>
+    <div class="container">
+        <h2>Register to Coddit!</h2>
+    
+        <form id="registerForm">
+    
+            <label for="email">Username:</label><br>
+            <input type="text" id="username" name="username"><br>
+    
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email"><br>
+    
+            <label for="password">Password:</label><br>
+            <input type="text" id="password" name="password"><br>
+            <br>
+            <label>
+                <input type="checkbox" id="isAdmin" class="filled-in" name="isAdmin" checked="checked" />
+                <span>Is Admin?</span>
+            </label>
+            <br><br>
+            <button class="btn waves-effect waves-light" type="submit" >Register</button>
+        </form>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>
